@@ -133,7 +133,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
     function autoplay(videoId){
         var str = videoId;
         google.youtube('v3').search.list({
-            key: process.env.youtube_ap,
+            key: 'AIzaSyDqvVgBxU3_aobQxxU49F7jUwLp-TCnhjY',
             part: 'snippet',
             type: 'video', 
             videoDuration: 'medium',
