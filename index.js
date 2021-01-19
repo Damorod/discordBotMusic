@@ -25,7 +25,7 @@ const { YTseacher, YTSearch, YTSearcher } = require("ytsearcher");
 client.login(process.env.discord_token)
 const searcher = new YTSearcher({
     //key: process.env.youtube_ap,
-    key : 'AIzaSyDqvVgBxU3_aobQxxU49F7jUwLp-TCnhjY',
+    key: process.env.youtube_a,
     revealed: true
 });
 
