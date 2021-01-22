@@ -95,11 +95,11 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
                 return message.channel.send(`Fallo ${err}`)
             }
         }else{
-            serverQueue.forEach(element => {
-                if(element.title != songInfo.videoDetails.title){
+            for(var i = 0; i<serverQueue.songs.length; i++){
+                if(serverQueue.songs[i].title != song.title){
                     serverQueue.songs.push(song);
-                } 
-            });
+                }
+            }
         }
     }
     function play(guild, song){
