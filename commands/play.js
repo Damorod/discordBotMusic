@@ -137,7 +137,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             part: 'snippet',
             type: 'video', 
             videoDuration: 'medium',
-            maxResults: 3,
+            maxResults: 10,
             relatedToVideoId: str[0].toString(), 
         }).then((response)  =>{
             const {data} = response;
