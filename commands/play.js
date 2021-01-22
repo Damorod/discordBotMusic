@@ -95,11 +95,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
                 return message.channel.send(`Fallo ${err}`)
             }
         }else{
-            for(var i = 0; i<serverQueue.songs.length; i++){
-                if(serverQueue.songs[i].title != song.title){
-                    serverQueue.songs.push(song);
-                }
-            }
+            serverQueue.songs.push(song);
         }
     }
     function play(guild, song){
@@ -141,7 +137,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             part: 'snippet',
             type: 'video', 
             videoDuration: 'medium',
-            maxResults: 10,
+            maxResults: 3,
             relatedToVideoId: str[0].toString(), 
         }).then((response)  =>{
             const {data} = response;
