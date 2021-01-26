@@ -4,7 +4,7 @@ module.exports.run = (client, message, args, queue, searcher, spotifyApi) =>{
     message.react('👍');
     const exampleEmbed = new Discord.MessageEmbed()
 	.setColor('GREEN')
-	.setAuthor('Music Bot', 'https://i.imgur.com/HQqoqu7.jpg')
+	.setAuthor('Music Bot', 'https://i.imgur.com/fkMySaR.png')
 	.addFields(
 		{ name: "!play/!p/!pl", value: "Se utiliza escribiendo !play seguido del nombre de la cancion, el link de youtube o spotify", inline: false },
         { name: "!pause/!pa", value: "Se utiliza para pausear la cancion actual", inline: false },
@@ -18,7 +18,7 @@ module.exports.run = (client, message, args, queue, searcher, spotifyApi) =>{
         { name: "!clear/!cle", value: "Se utiliza para borrar mensajes viejos", inline: false },
 	)
 	.setTimestamp()
-	.setFooter('Music Bot', 'https://i.imgur.com/HQqoqu7.jpg');
+	.setFooter('Music Bot', 'https://i.imgur.com/fkMySaR.png');
 
     message.channel.send(exampleEmbed);
 }

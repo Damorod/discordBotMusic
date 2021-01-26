@@ -23,7 +23,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             })
         }else if(url.match((/^https?:\/\/(www.youtube.com|youtube.com)\/watch(.*)$/))){
             let songInfo = await ytdl.getInfo(url);
-            autoplay(url.match(/(?<=\=)(.*)$/))
+            //autoplay(url.match(/(?<=\=)(.*)$/))
             return videoHandler(songInfo, message, vc);
     
         }else if(url.match(/^https?:\/\/(open.spotify.com)\/playlist\/(.*)$/)){
@@ -35,7 +35,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             if(result.first == null)
                 return message.channel.send("No se encontraron resultados");
             let songInfo = await ytdl.getInfo(result.first.url);
-            autoplay(result.first.url.match(/(?<=\=)(.*)$/))
+            //autoplay(result.first.url.match(/(?<=\=)(.*)$/))
             return videoHandler(songInfo, message, vc);
         }
     }catch(UnhandledPromiseRejectionWarning){
@@ -78,6 +78,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
                 songs: [],
                 volume: 100,
                 playing: true,
+                autoplay: false,
                 loopone: false,
                 loopall: false
             };
@@ -105,8 +106,8 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             queue.delete(guild.id);
             return;
         }
-        if(serverQueue.songs.length == 1){
-            autoplay(serverQueue.songs[0].url.match(/(?<=\=)(.*)$/))
+        if(serverQueue.songs.length == 2 && serverQueue.autoplay){
+            autoplay(serverQueue.songs[0].url.match(/(?<=\=)(.*)$/), serverQueue.songs[0].title);
         }
         const dispatcher = serverQueue.connection
             .play(ytdl(song.url))
@@ -116,6 +117,9 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
                 }
                 else if(serverQueue.loopall){
                     serverQueue.songs.push(serverQueue.songs[0]);
+                    serverQueue.songs.shift();
+                }else if(serverQueue.autoplay && serverQueue.songs.length == 1){
+                    autoplay(serverQueue.songs[0].url.match(/(?<=\=)(.*)$/), serverQueue.songs[0].title);
                     serverQueue.songs.shift();
                 }else{
                     serverQueue.songs.shift();
@@ -130,7 +134,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             });
     }
 
-    function autoplay(videoId){
+    function autoplay(videoId, title){
         var str = videoId;
         google.youtube('v3').search.list({
             key: process.env.youtube_api,
@@ -143,10 +147,11 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             const {data} = response;
             data.items.forEach( async (item) => {
                 try{
-                    console.log(item.snippet.title);
-                    let result = await searcher.search(item.snippet.title, {type: "video"});
-                    let songInfo = await ytdl.getInfo(result.first.url);
-                    await videoHandler(songInfo, message, vc);
+                    if(title.localeCompare(item.snippet.title) != 0){
+                        let result = await searcher.search(item.snippet.title, {type: "video"});
+                        let songInfo = await ytdl.getInfo(result.first.url);
+                        await videoHandler(songInfo, message, vc);
+                    }               
                 }catch(UnhandledPromiseRejectionWarning){
                     console.log("no va");
                 }
