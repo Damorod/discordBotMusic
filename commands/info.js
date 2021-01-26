@@ -15,6 +15,8 @@ module.exports.run = (client, message, args, queue, searcher, spotifyApi) =>{
         { name: "!loop/!l", value: "Se utiliza para repetir la cancion o la playlist constantemente (all, one, off)", inline: false },
         { name: "!leave", value: "Se utiliza para sacar el bot del canal", inline: false },
         { name: "!info/!i", value: "Se utiliza para parar ver todos los comandos", inline: false },
+        { name: "!move/!m", value: "Se utiliza para cambiar de posicion cancion en la cola ((ej: !move 2 3) cambia la cancion 2 a la pos 3)", inline: false },
+        { name: "!autoplay/!auto", value: "Se utiliza para activar el autoplay, solo funciona luego de utilizar !play (!autoplay on/off)", inline: false },
         { name: "!clear/!cle", value: "Se utiliza para borrar mensajes viejos", inline: false },
 	)
 	.setTimestamp()
