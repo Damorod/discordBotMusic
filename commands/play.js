@@ -100,6 +100,8 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
         }
     }
     function play(guild, song){
+        console.log(serverQueue.songs.length);
+        console.log(serverQueue.autoplay);
         const serverQueue = queue.get(guild.id);
         if(!song){
             serverQueue.vChannel.leave();
