@@ -107,6 +107,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             return;
         }
         if(serverQueue.songs.length == 2 && serverQueue.autoplay){
+            console.log("fuck");
             autoplay(serverQueue.songs[0].url.match(/(?<=\=)(.*)$/), serverQueue.songs[0].title);
         }
         const dispatcher = serverQueue.connection
