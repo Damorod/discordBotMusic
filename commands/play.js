@@ -100,8 +100,6 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
         }
     }
     function play(guild, song){
-        console.log(serverQueue.songs.length);
-        console.log(serverQueue.autoplay);
         const serverQueue = queue.get(guild.id);
         if(!song){
             serverQueue.vChannel.leave();
@@ -109,9 +107,9 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
             return;
         }
         if(serverQueue.songs.length == 2 && serverQueue.autoplay){
-            console.log("fuck");
             autoplay(serverQueue.songs[0].url.match(/(?<=\=)(.*)$/), serverQueue.songs[0].title);
         }
+        if(serverQueue.songs.length )
         const dispatcher = serverQueue.connection
             .play(ytdl(song.url))
             .on('finish', () =>{
@@ -123,7 +121,6 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
                     serverQueue.songs.shift();
                 }else if(serverQueue.autoplay && serverQueue.songs.length == 1){
                     autoplay(serverQueue.songs[0].url.match(/(?<=\=)(.*)$/), serverQueue.songs[0].title);
-                    serverQueue.songs.shift();
                 }else{
                     serverQueue.songs.shift();
                 }
