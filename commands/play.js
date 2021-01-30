@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args, queue, searcher, spotifyApi) =
         return message.channel.send("Ingresa un nombre o un link de youtube")
     let url = args.join("");
     try{
-        if(url.match(/^https?:\/\/(music.youtube.com|www.youtube.com|youtube.com)\/(playlist|watch)(.*)$/)){
+        if(url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/(playlist|watch)(.*)\l(.*)$/)){
             await ytpl(url).then(async playlist =>{
                 message.channel.send(`La playlist: "${playlist.title}" fue agregada`)
                 playlist.items.forEach(async item =>{
